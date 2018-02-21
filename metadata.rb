@@ -1,0 +1,7 @@
+name 'sybase'
+maintainer 'Blue Medora'
+maintainer_email 'engops@bluemedora.com'
+license 'all_rights'
+description 'Installs/Configures sybase'
+long_description 'Installs/Configures sybase'
+version '0.1.0'

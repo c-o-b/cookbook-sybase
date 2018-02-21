@@ -1,2 +1,4 @@
-# cookbook-sybase
-Cookbook that installs Sybase
+# sybase
+
+TODO: Enter the cookbook description here.
+
