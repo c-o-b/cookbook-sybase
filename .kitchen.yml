@@ -29,6 +29,9 @@ suites:
           sybase_notification_smtp_hostname: "smtp.bluemedora.localnet"
           sybase_notification_recipient_email: "engops@bluemedora.com"
           sy_cfg_ase_password: "password"
+          sy_cfg_sm_password: "password"
+          config_scc_csi_sccadmin_pwd: "passowrd"
+          config_scc_csi_uafadmin_pwd: "password"
 
     driver:
       network:

@@ -1,6 +1,7 @@
 ################################################################################
 # This is a chef generated response file for Sybase Adaptive Server Enterprise #
 ################################################################################
+
 RUN_SILENT=<%=node[:sybase][:rsp][:run_silent]%>
 USER_INSTALL_DIR=<%=node[:sybase][:rsp][:user_install_dir]%>
 INSTALL_OLDER_VERSION=<%=node[:sybase][:rsp][:install_older_version]%>
@@ -29,9 +30,6 @@ SY_CONFIG_JS_SERVER=<%=node[:sybase][:rsp][:sy_config_js_server]%>
 SY_CONFIG_SM_SERVER=<%=node[:sybase][:rsp][:sy_config_sm_server]%>
 SY_CONFIG_SCC_SERVER=<%=node[:sybase][:rsp][:sy_config_scc_server]%>
 
-
-
-
 SY_CFG_ASE_SERVER_NAME=<%=node[:sybase][:rsp][:sy_cfg_ase_server_name]%>
 SY_CFG_ASE_PORT_NUMBER=<%=node[:sybase][:rsp][:sy_cfg_ase_port_number]%>
 SY_CFG_ASE_APPL_TYPE=<%=node[:sybase][:rsp][:sy_cfg_ase_appl_type]%>
@@ -47,145 +45,46 @@ SY_CFG_ASE_SYBPROC_DB_SIZE=<%=node[:sybase][:rsp][:sy_cfg_ase_sybroc_db_size]%>
 SY_CFG_ASE_SYBTEMP_DEV_NAME=<%=node[:sybase][:rsp][:sy_cfg_ase_sybtemp_dev_name]%>
 SY_CFG_ASE_SYBTEMP_DEV_SIZE=<%=node[:sybase][:rsp][:sy_cfg_ase_sybtemp_dev_size]%>
 SY_CFG_ASE_SYBTEMP_DB_SIZE=<%=node[:sybase][:rsp][:sy_cfg_ase_sybtemp_db_size]%>
-
-SY_CFG_ASE_ERROR_LOG=/opt/sybase/ASE-15_0/install/SYBASE.log
-SY_CFG_ASE_PCI_ENABLE=false
-SY_CFG_ASE_PCI_DEV_NAME=
-SY_CFG_ASE_PCI_DEV_SIZE=
-SY_CFG_ASE_PCI_DB_SIZE=
-
-SY_CFG_ASE_TEMP_DEV_NAME=/opt/sybase/data/tempdbdev.dat
-SY_CFG_ASE_TEMP_DEV_SIZE=100
-SY_CFG_ASE_TEMP_DB_SIZE=100
-SY_CFG_ASE_OPT_ENABLE=false
-SY_CFG_ASE_CPU_NUMBER=
-SY_CFG_ASE_MEMORY=
-SY_CFG_ASE_LANG=
-SY_CFG_ASE_CHARSET=
-SY_CFG_ASE_SORTORDER=
-SY_CFG_ASE_SAMPLE_DB=false
-
-
-
-
-
-#Configure New Backup Server
-#---------------------------
-# If SY_CONFIG_BS_SERVER=true, below properties are required:
-#
-# SY_CFG_BS_SERVER_NAME=<Backup Server name>
-# SY_CFG_BS_PORT_NUMBER=<Backup Server port number>
-# SY_CFG_BS_ERROR_LOG=<Backup Server error log>
-# BS_ADDL_CMD_ARG=<Additional command line arguments to Backup Server>
-#
-SY_CFG_BS_SERVER_NAME=SYBASE_BS
-SY_CFG_BS_PORT_NUMBER=5001
-SY_CFG_BS_ERROR_LOG=/opt/sybase/ASE-15_0/install/SYBASE_BS.log
-BS_ADDL_CMD_ARG=
-
-#Configure New XP Server
-#-----------------------
-# If SY_CONFIG_XP_SERVER=true, below properties are required:
-#
-# SY_CFG_XP_SERVER_NAME=<XP Server name>
-#	The name must be "<ASE server name (SY_CFG_ASE_SERVER_NAME) in uppercase>_XP" format.
-# SY_CFG_XP_PORT_NUMBER=<XP Server port number>
-# SY_CFG_XP_ERROR_LOG=<XP Server error log>
-#
-SY_CFG_XP_SERVER_NAME=SYBASE_XP
-SY_CFG_XP_PORT_NUMBER=5003
-SY_CFG_XP_ERROR_LOG=/opt/sybase/ASE-15_0/install/SYBASE_XP.log
-
-#Configure New Job Scheduler
-#---------------------------
-# If SY_CONFIG_JS_SERVER=true, below properties are required:
-#
-# SY_CFG_JS_SERVER_NAME=<Job Scheduler Agent name>
-# SY_CFG_JS_PORT_NUMBER=<Job Scheduler Agent port number>
-# SY_CFG_JS_MANAG_DEV_NAME=<Adaptive Server management device name>
-# SY_CFG_JS_MANAG_DEV_SIZE=<Adaptive Server management device size in MB>
-# SY_CFG_JS_MANAG_DB_SIZE=<Adaptive Server management database size in MB>
-#
-SY_CFG_JS_SERVER_NAME=SYBASE_JS
-SY_CFG_JS_PORT_NUMBER=4900
-SY_CFG_JS_MANAG_DEV_NAME=/opt/sybase/data/sybmgmtdb.dat
-SY_CFG_JS_MANAG_DEV_SIZE=75
-SY_CFG_JS_MANAG_DB_SIZE=75
-
-#Configure Self Management
-#-------------------------
-# If SY_CONFIG_SM_SERVER=true, below properties are required:
-#
-# SY_CFG_SM_USER_NAME=<Self Management user name>
-# SY_CFG_SM_PASSWORD=<Self Management user password>
-#
-SY_CFG_SM_USER_NAME=sa
-SY_CFG_SM_PASSWORD=
-
-#Sybase Control Center - Self Discovery Service Adaptor
-#----------------------------------------------
-# If SY_CONFIG_SCC_SERVER=true, below properties are required:
-#
-# SCC_SELFDISCOVERY_CONFIG_UDP_ADAPTOR=<true|false>
-#	This property determines whether to configure UDP adaptor.
-# SCC_SELFDISCOVERY_CONFIG_JINI_ADAPTOR=<true|false>
-#	This property determines whether to configure JINI adaptor.
-# SCC_SELFDISCOVERY_JINI_HOST_NAME=<JINI host name>
-#	Required if SCC_SELFDISCOVERY_CONFIG_JINI_ADAPTOR=true
-# SCC_SELFDISCOVERY_JINI_PORT_NUMBER=<JINI port number>
-#	Required if SCC_SELFDISCOVERY_CONFIG_JINI_ADAPTOR=true
-# SCC_SELFDISCOVERY_JINI_HEART_BEAT_PERIOD=<JINI heart beat period in seconds>
-#	Required when SCC_SELFDISCOVERY_CONFIG_JINI_ADAPTOR=true
-#
-SCC_SELFDISCOVERY_CONFIG_UDP_ADAPTOR=true
-SCC_SELFDISCOVERY_CONFIG_JINI_ADAPTOR=false
-SCC_SELFDISCOVERY_JINI_HOST_NAME=localhost
-SCC_SELFDISCOVERY_JINI_PORT_NUMBER=4160
-SCC_SELFDISCOVERY_JINI_HEART_BEAT_PERIOD=900
-
-#Sybase Control Center Service
-#-----------------------------
-# CONFIG_SCC_HTTP_PORT=<http port number for Sybase Control Center>
-# CONFIG_SCC_HTTPS_PORT=<https port number for Sybase Control Center>
-CONFIG_SCC_HTTP_PORT=8282
-CONFIG_SCC_HTTPS_PORT=8283
-
-#RMI Service
-#-----------
-# SCC_RMI_PORT_NUMBER==<https port number for RMI>
-SCC_RMI_PORT_NUMBER=9999
-
-#Security Login Modules
-#----------------------
-# CONFIG_SCC_CSI_SCCADMIN_PWD=<SCC administrator password>
-# CONFIG_SCC_CSI_UAFADMIN_PWD=<SCC agent administrator password>
-CONFIG_SCC_CSI_SCCADMIN_PWD=
-CONFIG_SCC_CSI_UAFADMIN_PWD=
-
-#Enable SCC Shared Disk
-#----------------------
-# SCC Shared Disk mode allows user to run multiple SCC server
-# and/or agent processes across one or more host computers.
-ENABLE_SCC_SHARED_DISK=false
-
-#SCC Instance Name
-#-----------------
-# Specify a SCC instance name to create.
-# Only valid if SCC Shared Disk is enabled and new install.
-# Allow characters are: [a-z], [A-Z], [0-9], ., _, and -.
-# If value is not specified, host name will be used.
-CREATE_SCC_INSTANCE_NAME=
-
-#Refresh SCC Instance Type
-#-------------------------
-# Select the existing SCC instance type you would like to refresh:
-# Only valid if SCC Shared Disk is enabled.
-#
-# Do not refresh instances              = NONE
-# Refresh agent instances               = AGENT
-REFRESH_SCC_INSTANCE_TYPE=AGENT
-
-# Sybase Control Center Service Setup
-#
-# INSTALL_SCC_SERVICE=<TRUE|FALSE>
-INSTALL_SCC_SERVICE=TRUE
+SY_CFG_ASE_ERROR_LOG=<%=node[:sybase][:rsp][:sy_cfg_ase_error_log]%>
+SY_CFG_ASE_PCI_ENABLE=<%=node[:sybase][:rsp][:sy_cfg_ase_pci_enable]%>
+SY_CFG_ASE_PCI_DEV_NAME=<%=node[:sybase][:rsp][:sy_cfg_ase_pci_dev_name]%>
+SY_CFG_ASE_PCI_DEV_SIZE=<%=node[:sybase][:rsp][:sy_cfg_ase_pci_dev_size]%>
+SY_CFG_ASE_PCI_DB_SIZE=<%=node[:sybase][:rsp][:sy_cfg_ase_pci_db_size]%>
+SY_CFG_ASE_TEMP_DEV_NAME=<%=node[:sybase][:rsp][:sy_cfg_ase_temp_dev_name]%>
+SY_CFG_ASE_TEMP_DEV_SIZE<%=node[:sybase][:rsp][:sy_cfg_ase_temp_dev_size]%>
+SY_CFG_ASE_TEMP_DB_SIZE=<%=node[:sybase][:rsp][:sy_cfg_ase_temp_db_size]%>
+SY_CFG_ASE_OPT_ENABLE=<%=node[:sybase][:rsp][:sy_cfg_ase_opt_enable]%>
+SY_CFG_ASE_CPU_NUMBER=<%=node[:sybase][:rsp][:sy_cfg_ase_cpu_number]%>
+SY_CFG_ASE_MEMORY=<%=node[:sybase][:rsp][:sy_cfg_ase_memory]%>
+SY_CFG_ASE_LANG=<%=node[:sybase][:rsp][:sy_cfg_ase_lang]%>
+SY_CFG_ASE_CHARSET=<%=node[:sybase][:rsp][:sy_cfg_ase_charset]%>
+SY_CFG_ASE_SORTORDER=<%=node[:sybase][:rsp][:sy_cfg_ase_sortorder]%>
+SY_CFG_ASE_SAMPLE_DB=<%=node[:sybase][:rsp][:sy_cfg_ase_sample_db]%>
+SY_CFG_BS_SERVER_NAME=<%=node[:sybase][:rsp][:sy_cfg_bs_server_name]%>
+SY_CFG_BS_PORT_NUMBER=<%=node[:sybase][:rsp][:sy_cfg_bs_port_number]%>
+SY_CFG_BS_ERROR_LOG=<%=node[:sybase][:rsp][:sy_cfg_bs_error_log]%>
+BS_ADDL_CMD_ARG=<%=node[:sybase][:rsp][:bs_addl_cmd_arg]%>
+SY_CFG_XP_SERVER_NAME=<%=node[:sybase][:rsp][:sy_cfg_xp_server_name]%>
+SY_CFG_XP_PORT_NUMBER=<%=node[:sybase][:rsp][:sy_cfg_xp_port_number]%>
+SY_CFG_XP_ERROR_LOG=<%=node[:sybase][:rsp][:sy_cfg_xp_error_log]%>
+SY_CFG_JS_SERVER_NAME=<%=node[:sybase][:rsp][:sy_cfg_js_server_name]%>
+SY_CFG_JS_PORT_NUMBER=<%=node[:sybase][:rsp][:sy_cfg_js_port_number]%>
+SY_CFG_JS_MANAG_DEV_NAME=<%=node[:sybase][:rsp][:sy_cfg_js_manag_dev_name]%>
+SY_CFG_JS_MANAG_DEV_SIZE=<%=node[:sybase][:rsp][:sy_cfg_js_manag_dev_size]%>
+SY_CFG_JS_MANAG_DB_SIZE=<%=node[:sybase][:rsp][:sy_cfg_js_manag_db_size]%>
+SY_CFG_SM_USER_NAME=<%=node[:sybase][:rsp][:sy_cfg_sm_user_name]%>
+SY_CFG_SM_PASSWORD=<%=node[:sybase][:rsp][:sy_cfg_sm_password]%>
+SCC_SELFDISCOVERY_CONFIG_UDP_ADAPTOR=<%=node[:sybase][:rsp][:scc_selfdiscovery_config_udp_adaptor]%>
+SCC_SELFDISCOVERY_CONFIG_JINI_ADAPTOR=<%=node[:sybase][:rsp][:scc_selfdiscovery_config_jini_adaptor]%>
+SCC_SELFDISCOVERY_JINI_HOST_NAME=<%=node[:sybase][:rsp][:scc_selfdiscovery_jini_host_name]%>
+SCC_SELFDISCOVERY_JINI_PORT_NUMBER=<%=node[:sybase][:rsp][:scc_selfdiscovery_jini_port_number]%>
+SCC_SELFDISCOVERY_JINI_HEART_BEAT_PERIOD=<%=node[:sybase][:rsp][:scc_selfdiscovery_jini_heart_beat_period]%>
+CONFIG_SCC_HTTP_PORT=<%=node[:sybase][:rsp][:config_scc_http_port]%>
+CONFIG_SCC_HTTPS_PORT=<%=node[:sybase][:rsp][:config_scc_https_port]%>
+SCC_RMI_PORT_NUMBER=<%=node[:sybase][:rsp][:scc_rmi_port_number]%>
+CONFIG_SCC_CSI_SCCADMIN_PWD=<%=node[:sybase][:rsp][:config_scc_csi_sccadmin_pwd]%>
+CONFIG_SCC_CSI_UAFADMIN_PWD=<%=node[:sybase][:rsp][:config_scc_csi_uafadmin_pwd]%>
+ENABLE_SCC_SHARED_DISK=<%=node[:sybase][:rsp][:enable_scc_shared_disk]%>
+CREATE_SCC_INSTANCE_NAME=<%=node[:sybase][:rsp][:create_scc_instance_name]%>
+REFRESH_SCC_INSTANCE_TYPE=<%=node[:sybase][:rsp][:refresh_scc_instance_type]%>
+INSTALL_SCC_SERVICE=<%=node[:sybase][:rsp][:install_scc_service]%>
