@@ -16,3 +16,14 @@ end
     it { should be_listening }
   end
 end
+
+
+# Check for log directory
+[ "/usr/local/sybase/15.7", "/var/log/sybase/15.7" ].each do |dir|
+  describe file(dir) do
+    it { should be_directory }
+  end
+end
+
+
+# TODO: Parse response file for attributes assigned by the role
