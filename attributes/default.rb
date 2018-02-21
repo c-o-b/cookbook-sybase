@@ -1,6 +1,11 @@
 default[:sybase][:version] = "15.7"  # Used by response file attributes
 
 
+# User and group to run sybase under
+default[:sybase][:user] = "root" # TODO: Validate if this should be changed.
+default[:sybase][:group] = node[:sybase][:user]
+
+
 # Packages https://blogs.sap.com/2015/03/27/sap-sybase-database-ase-installation-steps-on-linux/
 default[:sybase][:pkgs] = %w[ glib2 openmotif libXp libXt libXtst libXi libXmu libXext libSM libICE libX11 libXtst-devel
   libXi-devel openmotif-devel libXmu-devel libXt-devel libXext-devel libXp-devel libX11-devel libSM-devel libICE-devel ]
@@ -20,14 +25,25 @@ default[:sybase][:installer] = "setup.bin"
 default[:sybase][:log_dir]   = "/var/log/sybase/#{node[:sybase][:version]}"
 
 
-
 # Response file
 default[:sybase][:rsp][:file]   = "resp_file.txt" # NOTE, sybase uses the .txt extension
 default[:sybase][:rsp][:source] = "resp_file.txt.erb"
 
-# Response file parameters
+
+# Install command (full path to binary, implicity path to response file)
+default[:sybase][:install_cmd] = "#{node[:sybase][:stage_dir]}/#{node[:sybase][:installer]} \
+  -f #{node[:sybase][:rsp][:file]} \
+  -DAGREE_TO_SYBASE_LICENSE=true \
+  -DRUN_SILENT=true"
+#-i silent \
+
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                Response file parameters                   #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 default[:sybase][:rsp][:run_silent] = "true"
-default[:sybase][:rsp][:user_install_dir] = "/usr/bin/sybase"
+default[:sybase][:rsp][:user_install_dir] = "/usr/local/sybase/#{node[:sybase][:version]}"
 default[:sybase][:rsp][:install_older_version] = "false"
 default[:sybase][:rsp][:do_update_install] = "false"
 default[:sybase][:rsp][:choosen_install_set] = "Typical"
@@ -53,7 +69,7 @@ default[:sybase][:rsp][:sy_config_scc_server] = "true"
 default[:sybase][:rsp][:sy_cfg_ase_server_name] = "SYBASE"
 default[:sybase][:rsp][:sy_cfg_ase_port_number] = "5000"
 default[:sybase][:rsp][:sy_cfg_ase_appl_type] = "MIXED"
-default[:sybase][:rsp][:sy_cfg_ase_pagesize] = "4k"
+default[:sybase][:rsp][:sy_cfg_ase_pagesize] = "4k" # NOTE: 2k page size requires 64mb shared kernel memory minimum
 default[:sybase][:rsp][:ase_addl_cmd_arg] = ""
 default[:sybase][:rsp][:sy_cfg_ase_password] = "sybase" # NOTE: Default example response file value
 default[:sybase][:rsp][:sy_cfg_ase_master_dev_name] = "#{node[:sybase][:rsp][:user_install_dir]}/data/master.dat"
@@ -89,7 +105,7 @@ default[:sybase][:rsp][:sy_cfg_xp_port_number] = "5003"
 default[:sybase][:rsp][:sy_cfg_xp_error_log] = "#{node[:sybase][:log_dir]}/sybase_xp.log"
 default[:sybase][:rsp][:sy_cfg_js_server_name] = "sybase_js"
 default[:sybase][:rsp][:sy_cfg_js_port_number] = "4900"
-default[:sybase][:rsp][:sy_cfg_js_manag_dev_name] = "#{node[:sybase][:user_install_dir]}/data/sybmgmtdb.dat"
+default[:sybase][:rsp][:sy_cfg_js_manag_dev_name] = "#{node[:sybase][:rsp][:user_install_dir]}/data/sybmgmtdb.dat"
 default[:sybase][:rsp][:sy_cfg_js_manag_dev_size] = "75"
 default[:sybase][:rsp][:sy_cfg_js_manag_db_size] = "75"
 default[:sybase][:rsp][:sy_cfg_sm_user_name] = "sa"
