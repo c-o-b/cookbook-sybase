@@ -26,4 +26,7 @@ end
 end
 
 
-# TODO: Parse response file for attributes assigned by the role
+# Make sure exec-shield is disabled
+describe command('grep -v \'^#\' /etc/sysctl.conf | grep "\kernel.exec-shield=0\b"') do
+  its('exit_status') { should eq 0 }
+end
