@@ -11,7 +11,7 @@ end
 
 
 # Check ports
-[22, 5000, 5001, 5003, 4900, 4160, 8282, 8283, 9999 ].each do |port|
+[22, 5000, 5001, 4900, 4160, 8282, 8283, 9999 ].each do |port|
   describe port port do
     it { should be_listening }
   end
