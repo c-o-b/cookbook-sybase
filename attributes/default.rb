@@ -25,6 +25,11 @@ default[:sybase][:installer] = "setup.bin"
 default[:sybase][:log_dir]   = "/var/log/sybase/#{node[:sybase][:version]}"
 
 
+# Library config file
+default[:sybase][:ld][:file]      = "/etc/ld.so.conf.d/sybase.conf"
+default[:sybase][:ld][:template]  = "ld.so.conf.erb"
+
+
 # Response file
 default[:sybase][:rsp][:file]   = "resp_file.txt" # NOTE, sybase uses the .txt extension
 default[:sybase][:rsp][:source] = "resp_file.txt.erb"

@@ -36,8 +36,23 @@ end
 
 
 # Install Sybase
-execute 'Install Sybase' do
-  cwd     node[:sybase][:stage_dir]
-  command node[:sybase][:install_cmd]
-  action  :run
+#execute 'Install Sybase' do
+#  cwd      node[:sybase][:stage_dir]
+#  command  node[:sybase][:install_cmd]
+#  action   :run
+#end # TODO: Add a gaurd
+
+
+# Update ld config
+template node[:sybase][:ld][:file] do
+  source node[:sybase][:ld][:template]
+  owner  'root'
+  group  'root'
+  mode   '0644'
+  notifies :run, 'execute[updateld]', :immediately
+end
+
+execute 'updateld' do
+  command 'ldconfig -v'
+  action  :nothing
 end
