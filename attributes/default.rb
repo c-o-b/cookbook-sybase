@@ -34,8 +34,8 @@ default[:sybase][:rsp][:source] = "resp_file.txt.erb"
 default[:sybase][:install_cmd] = "#{node[:sybase][:stage_dir]}/#{node[:sybase][:installer]} \
   -f #{node[:sybase][:rsp][:file]} \
   -DAGREE_TO_SYBASE_LICENSE=true \
-  -DRUN_SILENT=true"
-#-i silent \
+  -DRUN_SILENT=true \
+  -i silent"
 
 
 
@@ -46,7 +46,7 @@ default[:sybase][:rsp][:run_silent] = "true"
 default[:sybase][:rsp][:user_install_dir] = "/usr/local/sybase/#{node[:sybase][:version]}"
 default[:sybase][:rsp][:install_older_version] = "false"
 default[:sybase][:rsp][:do_update_install] = "false"
-default[:sybase][:rsp][:choosen_install_set] = "Typical"
+default[:sybase][:rsp][:choosen_install_set] = "Full"  # NOTE: Default is "Typical"
 default[:sybase][:rsp][:sybase_prouct_license_type] = "evaluate"
 default[:sybase][:rsp][:sysam_license_source] = "proceed_without_license" # NOTE: Default example response file value
 default[:sybase][:rsp][:sysam_license_file_pathname] = ""
