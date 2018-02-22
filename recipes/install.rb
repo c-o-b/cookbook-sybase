@@ -2,7 +2,7 @@
 directory node[:sybase][:log_dir] do
   owner node[:sybase][:user]
   group node[:sybase][:group]
-  mode '0744'
+  mode '0755'
   recursive true
   action :create
 end
@@ -28,6 +28,15 @@ directory "#{node[:sybase][:rsp][:user_install_dir]}/data" do
 end
 
 
+# Place init script
+template node[:sybase][:initd][:file] do
+  source node[:sybase][:initd][:template]
+  owner  'root'
+  group  'root'
+  mode   '0744'
+end
+
+
 # Disable exec-sheild per Sybase install guide: http://infocenter.sybase.com/help/index.jsp?topic=/com.sybase.infocenter.dc01002.0321/doc/html/jfo1260972820954.html
 execute 'Disable exec-shield' do
   command "echo kernel.exec-shield=0 >> /etc/sysctl.conf && sysctl -p"
@@ -35,12 +44,23 @@ execute 'Disable exec-shield' do
 end
 
 
-# Install Sybase
-#execute 'Install Sybase' do
-#  cwd      node[:sybase][:stage_dir]
-#  command  node[:sybase][:install_cmd]
-#  action   :run
-#end # TODO: Add a gaurd
+# Update the directories after the install
+chown = "chown -R #{node[:sybase][:user]}:#{node[:sybase][:group]}"
+execute 'permissions' do
+  command "#{chown} #{node[:sybase][:rsp][:user_install_dir]} && #{chown} #{node[:sybase][:log_dir]}"
+  action :nothing
+end
+
+
+# Install Sybase after setting permissions
+execute 'Install Sybase' do
+  user     'root'
+  cwd      node[:sybase][:stage_dir]
+  command  "su #{node[:sybase][:user]} -c \"#{node[:sybase][:install_cmd]}\""
+  action   :run
+  notifies :run, 'execute[permissions]', :before
+  not_if "#{node[:sybase][:initd][:file]} status"
+end
 
 
 # Update ld config
@@ -51,6 +71,7 @@ template node[:sybase][:ld][:file] do
   mode   '0644'
   notifies :run, 'execute[updateld]', :immediately
 end
+
 
 execute 'updateld' do
   command 'ldconfig -v'
