@@ -1,6 +1,6 @@
-default[:sybase][:version] = "15.7"
-default[:sybase][:user]    = "sybase"
-default[:sybase][:group]   = node[:sybase][:user]
+default[:sybase][:version]  = "15.7"
+default[:sybase][:user]     = "sybase"
+default[:sybase][:group]    = node[:sybase][:user]
 
 
 if node[:sybase][:version] == "15.7"
@@ -15,26 +15,32 @@ default[:sybase][:source_archive_path] = "Override me"  # Full path to the sourc
 # Directories and files
 default[:sybase][:stage_dir] = Chef::Config[:file_cache_path] # NOTE, Override if Chef cache does not have enough space
 default[:sybase][:installer] = "setup.bin"
-default[:sybase][:log_dir]   = "/var/log/sybase/#{node[:sybase][:version]}"
+default[:sybase][:home]      = "/usr/local/sybase"
+default[:sybase][:log_home]  = "/var/log/sybase"
+default[:sybase][:log_dir]   = "#{node[:sybase][:log_home]}/#{node[:sybase][:version]}"
 
 
-default[:sybase][:initd][:file]     = "/etc/init.d/sybase"
-default[:sybase][:initd][:template] = "sybase-init.sh.erb"
+if node[:platform_version].split(".")[0] == "6" then
+  default[:sybase][:initd][:file]     = "/etc/init.d/sybase"
+  default[:sybase][:initd][:template] = "sybase-init.sh.erb"
+else
+  default[:sybase][:initd][:file]     = "/etc/systemd/system/sybase" # TODO : Not implemented
+  default[:sybase][:initd][:template] = "sybase-systemd.erb"         # TODO : Not implemented
+end
 
 
 default[:sybase][:ld][:file]     = "/etc/ld.so.conf.d/sybase.conf"
 default[:sybase][:ld][:template] = "ld.so.conf.erb"
 
 
-default[:sybase][:rsp][:file]   = "resp_file.txt"
-default[:sybase][:rsp][:source] = "resp_file.txt.erb"
+default[:sybase][:rsp][:file]   = "resp_file.properties"
+default[:sybase][:rsp][:source] = "resp_file.properties.erb"
 
 
 default[:sybase][:install_cmd] = "#{node[:sybase][:stage_dir]}/#{node[:sybase][:installer]} \
-                                  -f #{node[:sybase][:rsp][:file]} \
-                                  -DAGREE_TO_SYBASE_LICENSE=true \
-                                  -DRUN_SILENT=true \
-                                  -i silent"
+-f #{node[:sybase][:stage_dir]}/#{node[:sybase][:rsp][:file]} \
+-DAGREE_TO_SYBASE_LICENSE=true \
+-i silent"
 
 
 
@@ -42,7 +48,7 @@ default[:sybase][:install_cmd] = "#{node[:sybase][:stage_dir]}/#{node[:sybase][:
 #          Begin Response file parameters                   #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 default[:sybase][:rsp][:run_silent]                  = "true"
-default[:sybase][:rsp][:user_install_dir]            = "/usr/local/sybase/#{node[:sybase][:version]}"
+default[:sybase][:rsp][:user_install_dir]            = "#{node[:sybase][:home]}/#{node[:sybase][:version]}"
 default[:sybase][:rsp][:install_older_version]       = "false"
 default[:sybase][:rsp][:do_update_install]           = "false"
 default[:sybase][:rsp][:choosen_install_set]         = "Full"
