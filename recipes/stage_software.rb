@@ -7,7 +7,7 @@ end
 
 
 # Extract as root / sudo user but retain ownership (sybase user)
-if node[:sybase][:source_archive].split[1] == "zip"
+if node[:sybase][:source_archive].split(".")[1] == "zip"
   cmd = "unzip"
 else
   cmd = "tar xvf"
