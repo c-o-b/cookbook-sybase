@@ -1,4 +1,5 @@
 default[:sybase][:pkgs] = %w[
+  unzip
   glib2
   openmotif
   libXp

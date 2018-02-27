@@ -5,6 +5,8 @@ default[:sybase][:group]    = node[:sybase][:user]
 
 if node[:sybase][:version] == "15.7"
   default[:sybase][:ase_dir] = "ASE-15_0"
+elsif node[:sybase][:version] == "16.0"
+  default[:sybase][:ase_dir] = "ASE-16_0"
 end
 
 
