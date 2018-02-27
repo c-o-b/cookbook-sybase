@@ -7,9 +7,14 @@ end
 
 
 # Extract as root / sudo user but retain ownership (sybase user)
+if node[:sybase][:source_archive].split[1] == "zip"
+  cmd = "unzip"
+else
+  cmd = "tar xvf"
+end
 execute "Extract archive" do
   cwd     node[:sybase][:stage_dir]
-  command "tar xvf #{node[:sybase][:source_archive]}"
+  command "#{cmd} #{node[:sybase][:source_archive]}"
   not_if  { ::File.exist?("#{node[:sybase][:stage_dir]}/#{node[:sybase][:installer]}") }
 end
 
