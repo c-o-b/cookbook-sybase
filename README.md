@@ -43,6 +43,7 @@ archive lives (chef cache)
 
 This cookbook can be tested with Test Kitchen using CentOS 6
 ```
+berks install
 kitchen verify
 ```
 
