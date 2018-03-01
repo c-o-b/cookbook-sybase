@@ -3,10 +3,20 @@
 node = json("/tmp/kitchen/dna.json").params
 if node['sybase']['version'] == "15.7"
   version = "15.7"
+  sybasehome = "/usr/local/sybase/#{version}"
+  logdir     = "/var/log/sybase/#{version}"
+  datadir    = "#{sybasehome}/data"
+  asedir     = "#{sybasehome}/ASE-15_0"
+  ocsdir     = "#{sybasehome}/OCS-15_0"
+elsif node['sybase']['version'] == "16.0"
+  version = "16.0"
+  sybasehome = "/usr/local/sybase/#{version}"
+  logdir     = "/var/log/sybase/#{version}"
+  datadir    = "#{sybasehome}/data"
+  asedir     = "#{sybasehome}/ASE-16_0"
+  ocsdir     = "#{sybasehome}/OCS-16_0"
 end
-sybasehome = "/usr/local/sybase/#{version}"
-logdir     = "/var/log/sybase/#{version}"
-datadir    = "#{sybasehome}/data"
+
 
 
 # Check for installed packages
@@ -37,7 +47,7 @@ end
 
 
 # Check for base and log directories
-%W[ #{sybasehome} #{sybasehome}/ASE-15_0 /var/log/sybase/15.7 ].each do |dir|
+%W[ #{sybasehome} #{asedir} #{logdir} ].each do |dir|
   describe file(dir) do
     it { should be_directory }
   end
@@ -45,8 +55,8 @@ end
 
 
 # Make sure ld paths are valid
-dirs = %W[ #{sybasehome}/ASE-15_0/lib #{sybasehome}/ASE-15_0/symlib #{sybasehome}/DataAccess64/ODBC/lib #{sybasehome}/DataAccess/ODBC/lib
-  #{sybasehome}/OCS-15_0/lib #{sybasehome}/OCS-15_0/lib3p64 #{sybasehome}/OCS-15_0/lib3p ].each do |dir|
+dirs = %W[ #{asedir}/lib #{asedir}/symlib #{sybasehome}/DataAccess64/ODBC/lib #{sybasehome}/DataAccess/ODBC/lib
+  #{ocsdir}/lib #{ocsdir}/lib3p64 #{ocsdir}/lib3p ].each do |dir|
   describe file(dir) do
     it { should be_directory }
   end
@@ -79,8 +89,8 @@ end
 
 # Make sure ldconfig -v shows SYBASE paths
 cmd='ldconfig -v | grep'
-[ "#{cmd} /ASE-15_0/lib", "#{cmd} /DataAccess64/ODBC/lib", "#{cmd} /DataAccess/ODBC/lib", "#{cmd} /OCS-15_0/lib", \
-  "#{cmd} /OCS-15_0/lib3p64", "#{cmd} /OCS-15_0/lib3p" ].each do |path|
+[ "#{cmd} #{asedir}/lib", "#{cmd} /DataAccess64/ODBC/lib", "#{cmd} /DataAccess/ODBC/lib", "#{cmd} #{ocsdir}/lib", \
+  "#{cmd} #{ocsdir}/lib3p64", "#{cmd} #{ocsdir}/lib3p" ].each do |path|
   describe command(path) do
     its('exit_status') { should eq 0 }
   end
@@ -94,6 +104,6 @@ end
 
 
 # Make sure dataserver is installed and returns a version
-describe command("#{sybasehome}/ASE-15_0/bin/dataserver -v") do
+describe command("#{asedir}/bin/dataserver -v") do
   its('exit_status') { should eq 0 }
 end
