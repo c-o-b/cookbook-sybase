@@ -3,9 +3,8 @@
 A cookbook that installs Sybase
 
 ## Supported Versions / Operating Systems
-
-Sybase 15.7 on CentOS 6 / RHEL 6
-Sybase 16.0 on CentOS 6 / RHEL 6
+- Sybase 15.7 on CentOS 6 / RHEL 6
+- Sybase 16.0 on CentOS 6 / RHEL 6
 
 ## Prerequisites
 
