@@ -1,12 +1,14 @@
-default[:sybase][:version]  = "15.7"
+default[:sybase][:version]      = "15.7"
 default[:sybase][:user]     = "sybase"
 default[:sybase][:group]    = node[:sybase][:user]
 
 
 if node[:sybase][:version] == "15.7"
   default[:sybase][:ase_dir] = "ASE-15_0"
+  default[:sybase][:ocs_dir] = "OCS-15_0"
 elsif node[:sybase][:version] == "16.0"
   default[:sybase][:ase_dir] = "ASE-16_0"
+  default[:sybase][:ocs_dir] = "OCS-16_0"
 end
 
 
@@ -22,13 +24,8 @@ default[:sybase][:log_home]  = "/var/log/sybase"
 default[:sybase][:log_dir]   = "#{node[:sybase][:log_home]}/#{node[:sybase][:version]}"
 
 
-if node[:platform_version].split(".")[0] == "6" then
-  default[:sybase][:initd][:file]     = "/etc/init.d/sybase"
-  default[:sybase][:initd][:template] = "sybase-init.sh.erb"
-else
-  default[:sybase][:initd][:file]     = "/etc/systemd/system/sybase" # TODO : Not implemented
-  default[:sybase][:initd][:template] = "sybase-systemd.erb"         # TODO : Not implemented
-end
+default[:sybase][:initd][:file]     = "/etc/init.d/sybase"
+default[:sybase][:initd][:template] = "sybase-init.sh.erb"
 
 
 default[:sybase][:ld][:file]     = "/etc/ld.so.conf.d/sybase.conf"
@@ -39,9 +36,16 @@ default[:sybase][:rsp][:file]   = "resp_file.properties"
 default[:sybase][:rsp][:source] = "resp_file.properties.erb"
 
 
+
+if node[:sybase][:version].split(".")[0] == "16" then
+  agree = "-DAGREE_TO_SAP_LICENSE=true"
+elsif node[:sybase][:version].split(".")[0] == "15"
+  agree = "-DAGREE_TO_SYBASE_LICENSE=true"
+end
+
 default[:sybase][:install_cmd] = "#{node[:sybase][:stage_dir]}/#{node[:sybase][:installer]} \
 -f #{node[:sybase][:stage_dir]}/#{node[:sybase][:rsp][:file]} \
--DAGREE_TO_SYBASE_LICENSE=true \
+#{agree} \
 -i silent"
 
 
@@ -80,11 +84,11 @@ default[:sybase][:rsp][:sy_cfg_ase_pagesize]         = "4k"
 default[:sybase][:rsp][:ase_addl_cmd_arg]            = ""
 default[:sybase][:rsp][:sy_cfg_ase_password]         = "sybase" # NOTE: Optionally override
 default[:sybase][:rsp][:sy_cfg_ase_master_dev_name]  = "#{node[:sybase][:rsp][:user_install_dir]}/data/master.dat"
-default[:sybase][:rsp][:sy_cfg_ase_master_dev_size]  = "60"
-default[:sybase][:rsp][:sy_cfg_ase_master_db_size]   = "26"
+default[:sybase][:rsp][:sy_cfg_ase_master_dev_size]  = "216"
+default[:sybase][:rsp][:sy_cfg_ase_master_db_size]   = "184"
 default[:sybase][:rsp][:sy_cfg_ase_sybroc_dev_name]  = "#{node[:sybase][:rsp][:user_install_dir]}/data/sysprocs.dat"
-default[:sybase][:rsp][:sy_cfg_ase_sybroc_dev_size]  = "172"
-default[:sybase][:rsp][:sy_cfg_ase_sybroc_db_size]   = "172"
+default[:sybase][:rsp][:sy_cfg_ase_sybroc_dev_size]  = "216"
+default[:sybase][:rsp][:sy_cfg_ase_sybroc_db_size]   = "184"
 default[:sybase][:rsp][:sy_cfg_ase_sybtemp_dev_name] = "#{node[:sybase][:rsp][:user_install_dir]}/data/sybsysdb.dat"
 default[:sybase][:rsp][:sy_cfg_ase_sybtemp_dev_size] = "6"
 default[:sybase][:rsp][:sy_cfg_ase_sybtemp_db_size]  = "6"
@@ -113,8 +117,8 @@ default[:sybase][:rsp][:sy_cfg_xp_error_log]         = "#{node[:sybase][:log_dir
 default[:sybase][:rsp][:sy_cfg_js_server_name]       = "sybase_js"
 default[:sybase][:rsp][:sy_cfg_js_port_number]       = "4900"
 default[:sybase][:rsp][:sy_cfg_js_manag_dev_name]    = "#{node[:sybase][:rsp][:user_install_dir]}/data/sybmgmtdb.dat"
-default[:sybase][:rsp][:sy_cfg_js_manag_dev_size]    = "75"
-default[:sybase][:rsp][:sy_cfg_js_manag_db_size]     = "75"
+default[:sybase][:rsp][:sy_cfg_js_manag_dev_size]    = "76"
+default[:sybase][:rsp][:sy_cfg_js_manag_db_size]     = "76"
 default[:sybase][:rsp][:sy_cfg_sm_user_name]         = "sa"
 default[:sybase][:rsp][:sy_cfg_sm_password]          = ""  # NOTE: Override this
 default[:sybase][:rsp][:scc_selfdiscovery_config_udp_adaptor]     = "true"
@@ -131,6 +135,11 @@ default[:sybase][:rsp][:enable_scc_shared_disk]      = "false"
 default[:sybase][:rsp][:create_scc_instance_name]    = node[:hostname]
 default[:sybase][:rsp][:refresh_scc_instance_type]   = "AGENT"
 default[:sybase][:rsp][:install_scc_service]         = "TRUE"
+
+# Sybase 16 specific response attributes
+default[:sybase][:rsp][:sy_cfg_user_account_change]  = "no" # $sy_cfg_user_account_change$
+default[:sybase][:rsp][:config_scc_repository_pwd]   = ""   # NOTE: Override this
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #            End Response file parameters                   #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
