@@ -48,6 +48,11 @@ kitchen verify
 ```
 
 #### Example .kitchen.yml
+The following example will deploy Sybase 15.7 and Sybase 16 and then test both configurations. You will need to
+tailor this configuration to your environment.
+
+* Note, you may need to include a recipe in the run list that configures a mountpoint for the source media. In
+our environment, we have a cookbook that does this and is included in our roles.
 ```
 ---
 driver:
@@ -106,5 +111,3 @@ suites:
           config_scc_csi_uafadmin_pwd: "password"
           config_scc_repository_pwd: "password" # NOTE: V 16 specific
 ```
-* Note, you may need to include a recipe in the run list that configures a mountpoint for the source media. In
-our environment, we have a cookbook that does this and is included in our roles.
