@@ -42,7 +42,7 @@ execute 'Install Sybase' do
   command  node[:sybase][:install_cmd]
   action   :run
   notifies :run, 'execute[permissions]', :before
-  not_if { ::File.exist?("/usr/local/sybase/15.7/ASE-15_0/bin/dataserver")}
+  not_if "#{node[:sybase][:rsp][:user_install_dir]}/#{node[:sybase][:ase_dir]}/bin/dataserver -v"
 end
 
 
