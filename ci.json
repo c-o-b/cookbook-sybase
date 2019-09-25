@@ -1,0 +1,54 @@
+{
+    "test":[
+        {
+            "os": "centos6",
+            "attributes": {
+                "sycbase": {
+                    "install": {
+                        "version": "15.7"
+                    },
+                    "source_archive": "ase157_linuxx86-64.tgz",
+                    "source_archive_path": "/mnt/atlas/software/Databases/Sybase/Sybase_ASE_15.7/ase157_linuxx86-64.tgz",
+                    "rsp": {
+                        "sybase_product_license_type": "developer",
+                        "sybase_notification_smtp_hostname": "smtp.bluemedora.localnet",
+                        "sybase_notification_recipient_email": "engops@bluemedora.com",
+                        "sy_cfg_ase_password": "password",
+                        "sy_cfg_sm_password": "password",
+                        "config_scc_csi_sccadmin_pwd": "passowrd",
+                        "config_scc_csi_uafadmin_pwd": "password"
+                    }
+                }
+            },
+            "runlist": "recipe[bm-base::file_server],recipe[sybase::default]",
+            "cpu": "2",
+            "mem": "4g",
+            "net": "121"
+        },
+        {
+            "os": "centos6",
+            "attributes": {
+                "sycbase": {
+                    "install": {
+                        "version": "16.0"
+                    },
+                    "source_archive": "ase16_linuxx86_64.zip",
+                    "source_archive_path": "/mnt/atlas/software/Databases/Sybase/Sybase_ASE_16.0/ase16_linuxx86_64.zip",
+                    "rsp": {
+                        "sybase_product_license_type": "developer",
+                        "sybase_notification_smtp_hostname": "smtp.bluemedora.localnet",
+                        "sybase_notification_recipient_email": "engops@bluemedora.com",
+                        "sy_cfg_ase_password": "password",
+                        "sy_cfg_sm_password": "password",
+                        "config_scc_csi_sccadmin_pwd": "passowrd",
+                        "config_scc_csi_uafadmin_pwd": "password"
+                    }
+                }
+            },
+            "runlist": "recipe[bm-base::file_server],recipe[sybase::default]",
+            "cpu": "2",
+            "mem": "4g",
+            "net": "121"
+        }
+    ]
+}

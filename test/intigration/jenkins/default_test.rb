@@ -1,22 +1,13 @@
-
-# Read node attributes
-node = json("/tmp/kitchen/dna.json").params
-if node['sybase']['version'] == "15.7"
-  version = "15.7"
-  sybasehome = "/usr/local/sybase/#{version}"
-  logdir     = "/var/log/sybase/#{version}"
-  datadir    = "#{sybasehome}/data"
+version = inspec.command('sudo ls /usr/local/sybase/ | tr -d "\n"').stdout
+sybasehome = "/usr/local/sybase#{version}"
+logdir     = "/var/log/sybase/#{version}"
+datadir    = "#{sybasehome}/data"
+asedir     = "#{sybasehome}/ASE-16_0"
+ocsdir     = "#{sybasehome}/OCS-16_0"
+if version == "15.7"
   asedir     = "#{sybasehome}/ASE-15_0"
   ocsdir     = "#{sybasehome}/OCS-15_0"
-elsif node['sybase']['version'] == "16.0"
-  version = "16.0"
-  sybasehome = "/usr/local/sybase/#{version}"
-  logdir     = "/var/log/sybase/#{version}"
-  datadir    = "#{sybasehome}/data"
-  asedir     = "#{sybasehome}/ASE-16_0"
-  ocsdir     = "#{sybasehome}/OCS-16_0"
 end
-
 
 
 # Check for installed packages
