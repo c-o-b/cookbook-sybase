@@ -3,7 +3,7 @@
         {
             "os": "centos6",
             "attributes": {
-                "sycbase": {
+                "sybase": {
                     "install": {
                         "version": "15.7"
                     },
@@ -28,7 +28,7 @@
         {
             "os": "centos6",
             "attributes": {
-                "sycbase": {
+                "sybase": {
                     "install": {
                         "version": "16.0"
                     },
