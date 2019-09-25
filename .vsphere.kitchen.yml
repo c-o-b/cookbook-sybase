@@ -1,0 +1,100 @@
+# sybase 16 on rhel 6
+# sybase 16 on centos 6
+# sybase 15 on rhel 6
+# sybase 15 on centos 6
+#
+---
+driver:
+  name: vsphere
+  driver_options:
+    host: 'vcsa-e.bluemedora.localnet'
+    user: 'svc_foreman'
+    password: 'U%XruV9S*dgi'
+    insecure: true
+  machine_options:
+    start_timeout: 600
+    create_timeout: 600
+    ready_timeout: 90
+    bootstrap_options:
+      use_linked_clone: false
+      bootstrap_ipv4: true
+      datacenter: 'USS'
+      template_folder: 'DevOps/Templates'
+      vm_folder: 'DevOps'
+      num_cpus: 2
+      memory_mb: 4096
+      network_name:
+        - "VLAN 11 Foreman"
+      datastore: "pure-iscsi"
+      ssh:
+        user: root
+        verify_host_key: false
+        password: password
+        port: 22
+      convergence_options:
+      customization_spec:
+        domain: bluemedora.localnet
+        ipsettings:
+          dnsServerList:
+            - 10.33.40.3
+            - 10.33.40.4
+
+
+verifier:
+  name: inspec
+  inspec_tests:
+    - test/recipes
+
+platforms:
+  - name: centos6
+    driver:
+      machine_options:
+        bootstrap_options:
+          host: "USS Dev Cluster/esxi-dev-uss-3.bluemedora.localnet"
+          template_name: "packer-centos-6-template"
+
+  - name: rhel6
+    driver:
+      machine_options:
+        bootstrap_options:
+          host: "USS Dev Cluster/esxi-dev-uss-3.bluemedora.localnet"
+          template_name: "packer-rhel-6-template"
+
+
+suites:
+  - name: sy15
+    run_list:
+      - recipe[bm-base::file_server]
+      - recipe[sybase::default]
+    attributes:
+      sybase:
+        version: "15.7"
+        source_archive: "ase157_linuxx86-64.tgz"
+        source_archive_path: "/mnt/atlas/software/Databases/Sybase/Sybase_ASE_15.7/ase157_linuxx86-64.tgz"
+        rsp:
+          sybase_product_license_type: "developer"
+          sybase_notification_smtp_hostname: "smtp.bluemedora.localnet"
+          sybase_notification_recipient_email: "engops@bluemedora.com"
+          sy_cfg_ase_password: "password"
+          sy_cfg_sm_password: "password"
+          config_scc_csi_sccadmin_pwd: "passowrd"
+          config_scc_csi_uafadmin_pwd: "password"
+
+  - name: sy16
+    run_list:
+      - recipe[bm-base::file_server]
+      - recipe[sybase::default]
+    attributes:
+      sybase:
+        version: "16.0"
+        source_archive: "ase16_linuxx86_64.zip"
+        source_archive_path: "/mnt/atlas/software/Databases/Sybase/Sybase_ASE_16.0/ase16_linuxx86_64.zip"
+        rsp:
+          sybase_product_license_type: "developer"
+          sybase_notification_smtp_hostname: "smtp.bluemedora.localnet"
+          sybase_notification_recipient_email: "engops@bluemedora.com"
+          sy_cfg_ase_password: "password"
+          sy_cfg_sm_password: "password"
+          config_scc_csi_sccadmin_pwd: "passowrd"
+          config_scc_csi_uafadmin_pwd: "password"
+          config_scc_repository_pwd: "password" # NOTE: V 16 specific
