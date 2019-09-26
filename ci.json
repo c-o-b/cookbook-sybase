@@ -4,7 +4,7 @@
             "os": "centos6",
             "attributes": {
                 "sybase": {
-                    "version": "15.7"
+                    "version": "15.7",
                     "source_archive": "ase157_linuxx86-64.tgz",
                     "source_archive_path": "/mnt/atlas/software/Databases/Sybase/Sybase_ASE_15.7/ase157_linuxx86-64.tgz",
                     "rsp": {
@@ -27,7 +27,7 @@
             "os": "centos6",
             "attributes": {
                 "sybase": {
-                    "version": "16.0"
+                    "version": "16.0",
                     "source_archive": "ase16_linuxx86_64.zip",
                     "source_archive_path": "/mnt/atlas/software/Databases/Sybase/Sybase_ASE_16.0/ase16_linuxx86_64.zip",
                     "rsp": {
