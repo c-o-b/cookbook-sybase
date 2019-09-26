@@ -1,5 +1,5 @@
 version = inspec.command('sudo ls /usr/local/sybase/ | tr -d "\n"').stdout
-sybasehome = "/usr/local/sybase#{version}"
+sybasehome = "/usr/local/sybase/#{version}"
 logdir     = "/var/log/sybase/#{version}"
 datadir    = "#{sybasehome}/data"
 asedir     = "#{sybasehome}/ASE-16_0"
